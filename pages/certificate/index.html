@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Certificate - Sorcery Gathering #10</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div id="magic-loading-overlay" class="glitch-wrapper hidden">
+        
+        <!-- Matrix rain diinject JS ke sini -->
+
+        <div class="glitch-content">
+            <div class="glitch-text" data-text="DECODING SPELLBOOK...">DECODING SPELLBOOK...</div>
+            <div class="glitch-sub">CONNECTING TO SORCERY NODES...</div>
+        </div>
+
+        <!-- Particles fullscreen -->
+        <div id="glitch-particles" class="glitch-particles"></div>
+
+        <!-- Status text cycling -->
+        <div id="matrix-status-text" class="matrix-status"></div>
+
+        <div class="glitch-scanlines"></div>
+    </div>
+
+    <section id="certificate-claim" class="cert-page-glass">
+        
+        <div class="glass-container">
+            <header class="cert-header">
+                <h2 class="cert-title">CLAIM <span class="text-glow-purple">CERTIFICATE</span></h2>
+                <p class="cert-subtitle">Masukkan ID Sihir (SGN10-XXX) atau Nomor HP terdaftar.</p>
+            </header>
+
+            <div class="claim-interface">
+                <div class="input-glass-box">
+                    <input type="text" id="input-credential" placeholder="Enter ID / Phone Number" autocomplete="off">
+                    
+                    <button id="btn-check-cert" class="btn-invoke">
+                        <span class="material-icons">auto_stories</span>
+                        <span class="btn-text">INVOKE DATA</span>
+                    </button>
+                </div>
+                <div id="claim-error" class="error-spell hidden">
+                    <span class="material-icons">warning</span> 
+                    <span class="btn-text">Data tidak ditemukan! Pastikan sudah check-in.</span>
+                </div>
+            </div>
+
+            <div id="cert-display-area" class="cert-display-container hidden">
+                <div class="canvas-shrine">
+                    
+                    <div id="cert-canvas" class="premium-cert-16-9">
+                        <img src="../../assets/images/logo_mark V2 (1).png" alt="Watermark" class="cert-watermark">
+                        
+                        <div class="premium-outer-border">
+                            <div class="premium-inner-border">
+                                
+                                <div class="cert-top-section">
+                                    <img src="../../assets/images/logo_mark V2 (1).png" alt="DS Logo" class="cert-logo-official">
+                                    <h4 class="cert-org-name">DATA SORCERERS INDONESIA</h4>
+                                </div>
+                                
+                                <h1 class="cert-title-serif">CERTIFICATE OF PARTICIPATION</h1>
+                                
+                                <div class="cert-body-section">
+                                    <p class="award-text">This certificate is proudly presented to</p>
+                                    <h2 id="display-name" class="participant-name-elegant">NAMA PESERTA DISINI</h2>
+                                    <p class="reason-text">for outstanding attendance and active participation in</p>
+                                    <p class="ev-name-bold">Sorcery Gathering #10</p>
+                                    <p class="ev-theme-elegant">"Sorcery of Scale: Orkestrasi AI untuk Skalabilitas UMKM Tanpa Batas"</p>
+                                    <p class="ev-date-place">Held in Yogyakarta, Indonesia on May 2nd, 2026</p>
+                                </div>
+
+                                <div class="signature-grid">
+                                    <div class="sig-column">
+                                        <div class="sig-img-wrapper">
+                                            <img src="../../assets/images/signature.png" alt="Founder Signature" class="sig-image">
+                                        </div>
+                                        <div class="sig-divider"></div>
+                                        <p class="sig-name-bold">Marchel Andrian Shevchenko</p>
+                                        <p class="sig-title-sub">Founder Data Sorcerers</p>
+                                    </div>
+                                    
+                                    <div class="sig-column">
+                                        <div class="sig-img-wrapper">
+                                            <img src="../../assets/images/signature.png" alt="Chairman Signature" class="sig-image">
+                                        </div>
+                                        <div class="sig-divider"></div>
+                                        <p class="sig-name-bold">Zidan Amikul Afham</p>
+                                        <p class="sig-title-sub">Ketua Pelaksana</p>
+                                    </div>
+                                </div>
+                                
+                                <div id="display-id" class="cert-verify-id">VERIFICATION ID: SGN10-XXXXXX</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-portal">
+                    <button id="btn-download-png" class="btn-portal">
+                        <span class="material-icons">image</span>
+                        <span class="btn-text">DOWNLOAD PNG</span>
+                    </button>
+                    <button id="btn-download-pdf" class="btn-portal">
+                        <span class="material-icons">picture_as_pdf</span>
+                        <span class="btn-text">DOWNLOAD PDF</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

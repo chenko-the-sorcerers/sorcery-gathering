@@ -1,0 +1,23 @@
+:root {
+  /* Magic Dark Mode Palette */
+  --bg-primary: #05000a; 
+  --bg-secondary: #160029; 
+  --bg-tertiary: #27004d;
+  
+  /* Text Colors */
+  --text-primary: #f0e6ff; 
+  --text-secondary: #b388ff; 
+  
+  /* Neon Magic Accents */
+  --accent-color: #9d00ff; 
+  --accent-glow: rgba(157, 0, 255, 0.6);
+  --gold: #c9a227;
+  
+  /* UI Elements */
+  --border-color: rgba(157, 0, 255, 0.2);
+  --glass-bg: rgba(20, 0, 40, 0.5);
+  --glass-border: rgba(160, 32, 240, 0.2);
+  
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}

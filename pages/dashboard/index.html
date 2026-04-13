@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Center - Sorcery Gathering #10</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div id="dash-login-overlay" class="dash-login-overlay">
+    <div class="login-box">
+        <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <span class="material-icons" style="font-size: 2rem;">lock</span> COMMAND CENTER
+        </h2>
+        <p>Masukkan PIN Akses Panitia</p>
+        <input type="password" id="admin-pin" placeholder="••••••" maxlength="6" autofocus>
+        <button id="btn-login" class="btn-primary w-full mt-20">Buka Gerbang</button>
+        <p id="login-error" class="text-error hidden">PIN Salah!</p>
+    </div>
+</div>
+
+<div class="dashboard-layout">
+    
+    <aside class="dash-sidebar">
+        <div class="sidebar-brand">
+            <img src="assets/images/logo_mark V2 (1).png" alt="Data Sorcerers Logo" style="width: 50px; margin-bottom: 10px;">
+            <h3>SORCERY HQ</h3>
+        </div>
+        
+        <div class="sidebar-user" id="btn-trigger-logout">
+            <div class="user-avatar" style="font-size: 1.8rem;">
+                <span class="material-icons">account_circle</span>
+            </div>
+            <div>
+                <p class="user-role">Active Admin</p>
+                <h4 id="active-admin-name">Memuat...</h4>
+            </div>
+        </div>
+        
+        <ul class="sidebar-nav" id="dash-nav">
+            <li class="active" data-target="tab-overview">
+                <a style="display: flex; align-items: center; gap: 10px;">
+                    <span class="material-icons">bar_chart</span> Main Dashboard
+                </a>
+            </li>
+            <li data-target="tab-scanner">
+                <a style="display: flex; align-items: center; gap: 10px;">
+                    <span class="material-icons">qr_code_scanner</span> Mata Sihir
+                </a>
+            </li>
+            <li data-target="tab-database">
+                <a style="display: flex; align-items: center; gap: 10px;">
+                    <span class="material-icons">storage</span> Data Center
+                </a>
+            </li>
+            <li data-target="tab-broadcast">
+                <a style="display: flex; align-items: center; gap: 10px;">
+                    <span class="material-icons">campaign</span> Broadcast Center
+                </a>
+            </li>
+            <li data-target="tab-settings">
+                <a style="display: flex; align-items: center; gap: 10px;">
+                    <span class="material-icons">settings</span> Settings
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <p class="small-text">Sorcery Gathering #10</p>
+            <p class="small-text" style="color: #a020f0;">Command Center v4.1</p>
+        </div>
+    </aside>
+
+    <main class="dash-main">
+        
+        <section id="tab-overview" class="dash-tab active-tab">
+            <div class="dash-header">
+                <h1>Command <span class="highlight">Center</span></h1>
+                <p>Real-Time Event Operations & Analytics SOGA #10.</p>
+            </div>
+            
+            <div class="dash-stats">
+                <div class="stat-card">
+                    <h3 id="stat-total">0</h3>
+                    <p>Total Pendaftar</p>
+                </div>
+                <div class="stat-card glow">
+                    <h3 id="stat-present" style="color: #00ff64;">0</h3>
+                    <p>Total Hadir</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-conversion" style="color: #e0aaff;">0%</h3>
+                    <p>Conversion Rate</p>
+                </div>
+            </div>
+
+            <div class="dash-grid" style="margin-bottom: 30px;">
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">donut_large</span> Gauge Check-in
+                    </h2>
+                    <div style="height: 200px; position: relative;">
+                        <canvas id="gaugeChart"></canvas>
+                    </div>
+                </div>
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">bar_chart</span> Peak Arrival Time
+                    </h2>
+                    <div style="height: 200px; position: relative;">
+                        <canvas id="arrivalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-grid" style="grid-template-columns: 1fr 1.5fr; margin-bottom: 30px;">
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">monitor_heart</span> Tech Health Monitor
+                    </h2>
+                    <div style="margin-bottom: 25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span style="color: #aaa; font-size: 0.9rem;">Database Sync Latency</span>
+                            <span id="ping-badge" class="badge-status badge-hadir">PINGING...</span>
+                        </div>
+                        <div style="font-size: 2rem; font-weight: bold; font-family: monospace; color: #fff;" id="ping-latency">-- ms</div>
+                    </div>
+                    <div style="padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #aaa; font-size: 0.9rem;">API Quota (Estimated)</span>
+                            <span class="badge-status badge-pending">MONITORING</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                            <div id="quota-bar" style="width: 15%; height: 100%; background: linear-gradient(90deg, #a020f0, #e0aaff); transition: 0.5s;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">schedule</span> Stage & Rundown Control
+                    </h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <span style="font-weight: bold; color: #ccc;">Event Status:</span>
+                        <select id="event-status-toggle" style="background: #111; color: #fff; border: 1px solid #a020f0; padding: 8px 15px; border-radius: 8px; font-weight: bold; outline: none;">
+                            <option value="on-time">ON TIME</option>
+                            <option value="delay">DELAYED</option>
+                            <option value="ahead">AHEAD OF SCHEDULE</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 15px; max-height: 280px; overflow-y: auto; padding-right: 5px;">
+                        <div style="display: flex; gap: 20px; align-items: center; background: rgba(160,32,240,0.1); padding: 15px; border-radius: 10px; border-left: 4px solid #a020f0;">
+                            <span style="color: #e0aaff; font-weight: bold; font-family: monospace; font-size: 1.2rem;">08:00</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 1.1rem;">Opening Remarks</div>
+                                <div style="font-size: 0.85rem; color: #aaa;">Zidan Amikul Afham</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px; align-items: center; padding: 15px; opacity: 0.8;">
+                            <span style="color: #888; font-weight: bold; font-family: monospace; font-size: 1.2rem;">08:30</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 1.1rem;">Sorcerer's Keynote</div>
+                                <div style="font-size: 0.85rem; color: #888;">Marchel Andrian S.</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px; align-items: center; padding: 15px; opacity: 0.8;">
+                            <span style="color: #888; font-weight: bold; font-family: monospace; font-size: 1.2rem;">09:30</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 1.1rem;">National Keynote</div>
+                                <div style="font-size: 0.85rem; color: #888;">Bpk. Ganjar Pranowo</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px; align-items: center; padding: 15px; opacity: 0.8;">
+                            <span style="color: #888; font-weight: bold; font-family: monospace; font-size: 1.2rem;">10:30</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 1.1rem;">Policy & Strategy</div>
+                                <div style="font-size: 0.85rem; color: #888;">Bpk. Tiar N. Karbala</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px; align-items: center; padding: 15px; opacity: 0.8;">
+                            <span style="color: #888; font-weight: bold; font-family: monospace; font-size: 1.2rem;">11:30</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 1.1rem;">Academic & Tech Synergy</div>
+                                <div style="font-size: 0.85rem; color: #888;">Bpk. Imam Machdi</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px; align-items: center; padding: 15px; opacity: 0.8;">
+                            <span style="color: #888; font-weight: bold; font-family: monospace; font-size: 1.2rem;">13:00</span>
+                            <div>
+                                <div style="font-weight: bold; font-size: 1.1rem;">Panel Discussion</div>
+                                <div style="font-size: 0.85rem; color: #888;">All Speakers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-grid" style="grid-template-columns: 1fr;">
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">mic</span> Speaker Readiness
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 45px; height: 45px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff;">GP</div>
+                                <div>
+                                    <div style="font-weight: bold; font-size: 1rem;">Ganjar Pranowo</div>
+                                    <div style="font-size: 0.8rem; color: #a020f0; font-weight: bold;">Gubernur Jateng 13-23</div>
+                                </div>
+                            </div>
+                            <select style="background: #111; color: #fff; border: 1px solid #444; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;">
+                                <option>In Transit</option>
+                                <option>Arrived</option>
+                                <option>Backstage</option>
+                            </select>
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 45px; height: 45px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff;">TK</div>
+                                <div>
+                                    <div style="font-weight: bold; font-size: 1rem;">Tiar N. Karbala</div>
+                                    <div style="font-size: 0.8rem; color: #a020f0; font-weight: bold;">Stafsus Presiden RI</div>
+                                </div>
+                            </div>
+                            <select style="background: #111; color: #fff; border: 1px solid #444; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;">
+                                <option>In Transit</option>
+                                <option>Arrived</option>
+                                <option>Backstage</option>
+                            </select>
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 45px; height: 45px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff;">IM</div>
+                                <div>
+                                    <div style="font-weight: bold; font-size: 1rem;">Imam Machdi</div>
+                                    <div style="font-size: 0.8rem; color: #a020f0; font-weight: bold;">Ka. LLDIKTI 5</div>
+                                </div>
+                            </div>
+                            <select style="background: #111; color: #fff; border: 1px solid #444; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;">
+                                <option>In Transit</option>
+                                <option>Arrived</option>
+                                <option>Backstage</option>
+                            </select>
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <img src="assets/images/ttd-marchel.png" style="width: 45px; height: 45px; border-radius: 50%; background: #fff; object-fit: contain; padding: 2px;">
+                                <div>
+                                    <div style="font-weight: bold; font-size: 1rem;">Marchel A.S.</div>
+                                    <div style="font-size: 0.8rem; color: #a020f0; font-weight: bold;">Founder DS</div>
+                                </div>
+                            </div>
+                            <select style="background: #111; color: #fff; border: 1px solid #444; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;">
+                                <option>Backstage</option>
+                                <option>Arrived</option>
+                                <option>In Transit</option>
+                            </select>
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <img src="assets/images/ttd-zidan.png" style="width: 45px; height: 45px; border-radius: 50%; background: #fff; object-fit: contain; padding: 2px;">
+                                <div>
+                                    <div style="font-weight: bold; font-size: 1rem;">Zidan Amikul</div>
+                                    <div style="font-size: 0.8rem; color: #a020f0; font-weight: bold;">Ketua Pelaksana</div>
+                                </div>
+                            </div>
+                            <select style="background: #111; color: #fff; border: 1px solid #444; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;">
+                                <option>Arrived</option>
+                                <option>Backstage</option>
+                                <option>In Transit</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-scanner" class="dash-tab hidden">
+            <div class="dash-header">
+                <h1>Mata <span class="highlight">Sihir</span></h1>
+                <p>Pusat verifikasi tiket masuk peserta di gerbang utama.</p>
+            </div>
+            <div class="dash-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">camera_alt</span> QR Scanner
+                    </h2>
+                    <div class="reader-box" style="padding: 10px; background: #000; border-radius: 15px;">
+                        <div id="qr-reader" style="width: 100%;"></div>
+                    </div>
+                    <div id="scan-result-alert" class="scan-alert hidden">
+                        <p id="scan-msg" style="margin: 0; font-weight: bold;">Mendeteksi ID...</p>
+                    </div>
+                </div>
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">keyboard</span> Manual Check-in
+                    </h2>
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 25px; line-height: 1.5;">Gunakan fitur ini sebagai backup jika QR Code peserta rusak atau terjadi kendala pemindai.</p>
+                    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border: 1px solid rgba(160,32,240,0.2);">
+                        <label style="display: block; margin-bottom: 10px; color: #ccc; font-size: 0.9rem;">ID Peserta (SGN-XXX)</label>
+                        <input type="text" id="manual-id-input" placeholder="Contoh: SGN-001" style="width: 100%; padding: 15px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid #a020f0; color: #fff; font-size: 1.1rem; text-align: center; margin-bottom: 20px; text-transform: uppercase;">
+                        <button id="btn-manual-checkin" class="btn-primary w-full" style="padding: 15px; font-weight: bold; font-size: 1.1rem; letter-spacing: 1px;">Proses Kehadiran</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-database" class="dash-tab hidden">
+            <div class="dash-header">
+                <h1>Data <span class="highlight">Center</span></h1>
+                <p>Manajemen database pendaftar secara real-time dan pencarian instan.</p>
+            </div>
+            <div class="dash-panel" style="margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                <input type="text" id="search-participant" placeholder="Cari Nama atau ID Peserta..." style="flex-grow: 1; min-width: 200px; padding: 12px 20px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid #a020f0; color: #fff; font-size: 1rem;">
+                <select id="filter-status" style="padding: 12px 20px; border-radius: 10px; background: #0f0519; border: 1px solid #a020f0; color: #fff; font-size: 1rem; cursor: pointer;">
+                    <option value="all">Semua Status</option>
+                    <option value="hadir">Hadir</option>
+                    <option value="pending">Pending</option>
+                </select>
+                <button id="btn-open-ots" class="btn-primary" style="padding: 12px 20px; background: rgba(160, 32, 240, 0.2); border: 1px solid #a020f0; display: flex; align-items: center; gap: 5px;">
+                    <span class="material-icons" style="font-size: 1.2rem;">person_add</span> On-The-Spot
+                </button>
+                <button id="btn-refresh-data" class="btn-primary" style="padding: 12px 20px; display: flex; align-items: center; gap: 5px;">
+                    <span class="material-icons" style="font-size: 1.2rem;">refresh</span> Refresh
+                </button>
+            </div>
+            <div class="dash-panel" style="padding: 0; overflow: hidden;">
+                <div class="table-container" style="max-height: 500px; overflow-y: auto;">
+                    <table id="registry-table" style="width: 100%; text-align: left;">
+                        <thead style="background: rgba(15, 5, 25, 0.95);">
+                            <tr>
+                                <th style="padding: 20px;">ID Sihir</th>
+                                <th style="padding: 20px;">Nama Peserta</th>
+                                <th style="padding: 20px;">Instansi / Organisasi</th>
+                                <th style="padding: 20px; text-align: center;">Status</th>
+                                <th style="padding: 20px; text-align: center;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registry-body">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 30px; color: #888;">Mengambil data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-broadcast" class="dash-tab hidden">
+            <div class="dash-header">
+                <h1>Broadcast <span class="highlight">Center</span></h1>
+                <p>Pusat komando pengiriman link Sertifikat Mandiri dan Reminder via WhatsApp.</p>
+            </div>
+            
+            <div class="dash-grid" style="grid-template-columns: 1fr 1.5fr;">
+                
+                <div class="dash-panel" style="display: flex; flex-direction: column;">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">chat</span> Template Editor
+                    </h2>
+                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 20px;">
+                        Gunakan tag <strong style="color:#a020f0;">[NAMA]</strong> dan <strong style="color:#a020f0;">[ID]</strong> untuk injeksi data otomatis.
+                    </p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-size: 0.9rem; color: #ccc; display: block; margin-bottom: 8px;">Link Halaman Sertifikat</label>
+                        <input type="text" id="cert-link-input" value="https://datasorcerers.com/certificate" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(160,32,240,0.5); color: #fff;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-size: 0.9rem; color: #ccc; display: block; margin-bottom: 8px;">Template Pesan: E-Certificate (Peserta Hadir)</label>
+                        <textarea id="template-cert" rows="6" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(160,32,240,0.5); color: #fff; font-family: inherit; resize: vertical;">Halo [NAMA], terima kasih telah hadir di Sorcery Gathering #10! Silakan klaim E-Certificate Anda melalui tautan berikut: 
+
+[LINK]
+
+Gunakan ID: [ID] atau Nomor HP terdaftar Anda. Salam, Tim DS.</textarea>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-size: 0.9rem; color: #ccc; display: block; margin-bottom: 8px;">Template Pesan: Reminder (Peserta Pending)</label>
+                        <textarea id="template-remind" rows="6" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(160,32,240,0.5); color: #fff; font-family: inherit; resize: vertical;">Halo [NAMA], jangan lupa hadir di acara Sorcery Gathering #10 besok jam 08:00 WIB! Siapkan QR Code Anda untuk check-in. Sampai jumpa!</textarea>
+                    </div>
+                    
+                    <button class="btn-primary w-full" style="padding: 12px; background: rgba(160,32,240,0.2); border: 1px solid #a020f0;">
+                        <span class="material-icons">save</span> Simpan Template
+                    </button>
+                </div>
+
+                <div class="dash-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                            <span class="material-icons">rocket_launch</span> Execution List
+                        </h2>
+                        <select id="broadcast-mode" style="padding: 10px 15px; border-radius: 8px; background: #0f0519; border: 1px solid #a020f0; color: #fff;">
+                            <option value="cert">Tebar Link Sertifikat (Hadir)</option>
+                            <option value="remind">Tebar Reminder (Pending)</option>
+                        </select>
+                    </div>
+
+                    <div class="table-container" style="max-height: 550px; overflow-y: auto;">
+                        <table id="broadcast-table" style="width: 100%; text-align: left;">
+                            <thead style="background: rgba(15, 5, 25, 0.95);">
+                                <tr>
+                                    <th style="padding: 15px;">Nama Peserta</th>
+                                    <th style="padding: 15px; text-align: center;">Tipe Kirim</th>
+                                    <th style="padding: 15px; text-align: center;">Eksekusi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="broadcast-body">
+                                <tr>
+                                    <td colspan="3" style="text-align: center; padding: 20px; color: #888;">Memuat Execution List...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="tab-settings" class="dash-tab hidden">
+            <div class="dash-header">
+                <h1>System <span class="highlight">Settings</span></h1>
+                <p>Konfigurasi level Admin untuk Command Center.</p>
+            </div>
+            
+            <div class="dash-grid" style="grid-template-columns: 1fr 1fr; gap: 30px;">
+                
+                <div class="dash-panel" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">download</span> Export Data Laporan
+                    </h2>
+                    <p style="color: #888; margin-bottom: 25px;">Unduh seluruh database kehadiran dalam format CSV untuk dilaporkan ke pihak Universitas dan Sponsor.</p>
+                    <button class="btn-primary" style="padding: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <span class="material-icons">file_download</span> Download Full CSV
+                    </button>
+                </div>
+
+                <div class="dash-panel">
+                    <h2 style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-icons">tune</span> Event Controls
+                    </h2>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;">
+                            <div>
+                                <strong style="display: block; color: #fff;">Buka Akses Sertifikat Mandiri</strong>
+                                <span style="font-size: 0.8rem; color: #888;">Mengizinkan peserta generate ijazah.</span>
+                            </div>
+                            <select style="background: #111; color: #00ff64; border: 1px solid #00ff64; padding: 6px 12px; border-radius: 6px; outline: none;">
+                                <option>DIBUKA</option>
+                                <option>DITUTUP</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;">
+                            <div>
+                                <strong style="display: block; color: #fff;">Pendaftaran On-The-Spot</strong>
+                                <span style="font-size: 0.8rem; color: #888;">Mengaktifkan tombol OTS.</span>
+                            </div>
+                            <select style="background: #111; color: #00ff64; border: 1px solid #00ff64; padding: 6px 12px; border-radius: 6px; outline: none;">
+                                <option>AKTIF</option>
+                                <option>NONAKTIF</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-panel" style="grid-column: span 2; border: 1px solid rgba(255, 51, 102, 0.4); background: rgba(50, 0, 10, 0.2);">
+                    <h2 style="display: flex; align-items: center; gap: 10px; color: #ff3366;">
+                        <span class="material-icons">warning</span> Danger Zone
+                    </h2>
+                    <p style="color: #ccc; margin-bottom: 20px;">Tindakan di bawah ini bersifat permanen dan tidak dapat dibatalkan.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 51, 102, 0.1); padding: 20px; border-radius: 10px;">
+                        <div>
+                            <strong style="display: block; color: #ff3366; font-size: 1.1rem;">Reset Database Kehadiran</strong>
+                            <span style="font-size: 0.85rem; color: #aaa;">Menghapus semua status check-in. Hanya gunakan ini saat simulasi/gladi bersih!</span>
+                        </div>
+                        <button class="btn-primary" style="background: #ff3366; border: none; padding: 12px 25px; font-weight: bold;">
+                            <span class="material-icons">delete_forever</span> RESET DATA
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<div id="ots-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 0;">
+            <span class="material-icons" style="color: #00ff64;">person_add</span> Form On-The-Spot
+        </h2>
+        <p style="color: #888; text-align: center; margin-bottom: 25px;">Masukkan data esensial untuk pendaftar dadakan (Go-Show).</p>
+        
+        <div style="text-align: left;">
+            <label style="color: #ccc; font-size: 0.9rem; margin-bottom: 8px; display: block;">Nama Lengkap Peserta *</label>
+            <input type="text" id="ots-name-input" placeholder="Ketik nama lengkap..." style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid #a020f0; color: #fff; margin-bottom: 15px;" required>
+            
+            <label style="color: #ccc; font-size: 0.9rem; margin-bottom: 8px; display: block;">Asal Instansi / Organisasi</label>
+            <input type="text" id="ots-org-input" placeholder="Opsional (Contoh: Universitas, Nama UMKM)" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid #a020f0; color: #fff; margin-bottom: 25px;">
+        </div>
+
+        <div style="display: flex; gap: 15px;">
+            <button id="btn-close-ots" class="btn-action w-full" style="padding: 12px; font-size: 1rem; border-color: rgba(255,255,255,0.1);">Batal</button>
+            <button id="btn-submit-ots" class="btn-primary w-full" style="padding: 12px; font-size: 1rem; background: #00ff64; color: #000; font-weight: bold;">Simpan & Check-in</button>
+        </div>
+    </div>
+</div>
+
+<div id="detail-modal" class="modal-overlay hidden">
+    <div class="modal-box" style="max-width: 600px; width: 95%;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="width: 60px; height: 60px; background: rgba(160,32,240,0.2); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                <span class="material-icons" style="font-size: 2rem; color: #e0aaff;">badge</span>
+            </div>
+            <h2 style="margin: 0; color: #fff; font-size: 1.5rem;" id="modal-detail-name">Nama Peserta</h2>
+            <p style="color: #a020f0; font-family: monospace; font-size: 1.1rem; margin: 5px 0 0 0;" id="modal-detail-id">SGN10-XXX</p>
+            <div style="margin-top: 10px;">
+                <span id="modal-detail-status" class="badge-status badge-hadir">HADIR</span>
+            </div>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px; margin-bottom: 25px; max-height: 400px; overflow-y: auto; font-size: 0.9rem;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Timestamp</span>
+                    <span style="color: #fff;" id="modal-detail-timestamp">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Email</span>
+                    <span style="color: #00ff64; font-family: monospace; word-break: break-all; font-size: 0.8rem;" id="modal-detail-email">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">WhatsApp</span>
+                    <span style="color: #00ff64; font-family: monospace; word-break: break-all; font-size: 0.8rem;" id="modal-detail-phone">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Gender</span>
+                    <span style="color: #fff;" id="modal-detail-gender">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Instansi</span>
+                    <span style="color: #fff; font-weight: bold;" id="modal-detail-org">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Pekerjaan</span>
+                    <span style="color: #fff;" id="modal-detail-job">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">LinkedIn</span>
+                    <span style="color: #4da6ff; word-break: break-all;" id="modal-detail-linkedin">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">GitHub</span>
+                    <span style="color: #4da6ff; word-break: break-all;" id="modal-detail-github">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Level</span>
+                    <span style="color: #fff;" id="modal-detail-level">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Fokus</span>
+                    <span style="color: #a020f0; font-weight: bold;" id="modal-detail-focus">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Tools</span>
+                    <span style="color: #fff;" id="modal-detail-tools">-</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888;">Sumber Info</span>
+                    <span style="color: #fff;" id="modal-detail-source">-</span>
+                </div>
+                <div style="display: flex; flex-direction: column; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                    <span style="color: #888; margin-bottom: 5px;">Ekspektasi</span>
+                    <span style="color: #fff; font-style: italic;" id="modal-detail-expectation">-</span>
+                </div>
+                <div style="display: flex; flex-direction: column; padding-bottom: 8px;">
+                    <span style="color: #888; margin-bottom: 5px;">Pertanyaan</span>
+                    <span style="color: #fff; font-style: italic;" id="modal-detail-question">-</span>
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-close-detail" class="btn-primary w-full" style="padding: 12px; font-size: 1rem;">Tutup Jendela</button>
+    </div>
+</div>
+
+<div id="logout-modal" class="modal-overlay hidden">
+    <div class="modal-box" style="text-align: center;">
+        <span class="material-icons" style="font-size: 4rem; color: #ff3366; margin-bottom: 15px;">exit_to_app</span>
+        <h2 style="margin: 0 0 10px 0; color: #fff;">Putus Koneksi?</h2>
+        <p style="color: #888; margin-bottom: 30px;">Anda akan keluar dari sesi Command Center. Verifikasi PIN ulang diperlukan untuk masuk kembali.</p>
+        
+        <div style="display: flex; gap: 15px;">
+            <button id="btn-cancel-logout" class="btn-action w-full" style="padding: 12px; font-size: 1rem; border-color: rgba(255,255,255,0.1);">Tetap Di Sini</button>
+            <button id="btn-confirm-logout" class="btn-primary w-full" style="padding: 12px; font-size: 1rem; background: #ff3366; color: #fff; border: none; font-weight: bold;">Ya, Keluar</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

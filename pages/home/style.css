@@ -1,0 +1,735 @@
+/* ==============================================================
+   DATA SORCERERS - PREMIUM GLOBAL STYLES (FULL VERSION)
+============================================================== */
+
+/* --- 0. MAGIC AMBIENT (CANVAS, CURSOR, RUNES) --- */
+body, a, button {
+  cursor: none !important;
+}
+
+body {
+  background-color: transparent !important;
+}
+
+#magic-canvas { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  z-index: -1; 
+  pointer-events: none; 
+  background: radial-gradient(circle at top right, #160029 0%, #05000a 70%); 
+}
+
+.cursor { 
+  position: fixed; 
+  width: 8px; 
+  height: 8px; 
+  background: #9d00ff; 
+  border-radius: 50%; 
+  pointer-events: none; 
+  z-index: 9999; 
+  transform: translate(-50%, -50%); 
+  box-shadow: 0 0 10px #9d00ff, 0 0 20px #e0aaff; 
+  transition: transform 0.15s ease-out, background 0.15s ease-out; 
+}
+
+.cursor-trail { 
+  position: fixed; 
+  width: 30px; 
+  height: 30px; 
+  border: 1px solid rgba(160,32,240, 0.5); 
+  border-radius: 50%; 
+  pointer-events: none; 
+  z-index: 9998; 
+  transform: translate(-50%, -50%); 
+  transition: border-color 0.15s ease-out; 
+}
+
+/* --- 1. HERO SECTION & TYPOGRAPHY --- */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center !important; 
+  min-height: 100vh !important; 
+  padding: 120px max(5vw, 20px) 100px max(5vw, 20px) !important;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+strong { color: #c060ff; font-weight: 600; }
+
+.hero-title {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #ffffff 40%, #a020f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px !important;
+}
+
+.hero-caption { 
+  font-size: 1.25rem; 
+  color: #e0aaff; 
+  max-width: 600px; 
+  margin-bottom: 50px !important; 
+  line-height: 1.8;
+}
+
+/* HERO COUNTDOWN */
+.hero-countdown {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px !important;
+}
+
+.countdown-item {
+    background: rgba(160, 32, 240, 0.1);
+    border: 1px solid rgba(160, 32, 240, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 12px 18px;
+    border-radius: 14px;
+    text-align: center;
+    min-width: 80px;
+    transition: transform 0.3s ease;
+}
+
+.countdown-item span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.countdown-item label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #b388ff;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* INFO CONTAINER */
+.info-container { 
+  display: flex; 
+  gap: 40px; 
+  margin-bottom: 50px !important;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(160, 32, 240, 0.1);
+}
+
+.info-block { display: flex; align-items: center; gap: 15px; }
+
+.info-icon { 
+  width: 48px; height: 48px; 
+  background: rgba(160, 32, 240, 0.15); 
+  border-radius: 12px; 
+  display: flex; align-items: center; justify-content: center; 
+  border: 1px solid rgba(160, 32, 240, 0.3); 
+}
+
+.info-text h4 { font-size: 1rem; color: #e0aaff; font-weight: 400; margin-bottom: 2px; }
+.info-text p { font-size: 1.1rem; font-weight: 600; color: #fff; }
+
+/* HERO STATS (LIVE COUNTER) */
+.hero-stats {
+    display: flex;
+    gap: 45px;
+    margin-bottom: 60px !important;
+}
+
+.counter {
+    background: linear-gradient(135deg, #ffffff, #a020f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.stat-box p { font-size: 0.85rem; color: #b388ff; text-transform: uppercase; letter-spacing: 1.5px; }
+
+/* Tombol Aksi (CTA) */
+.cta-group { display: flex; gap: 20px; margin-top: 30px; }
+
+.btn { 
+  padding: 15px 35px; border-radius: 8px; font-weight: 600; font-size: 1rem; 
+  transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; 
+  position: relative; overflow: hidden;
+}
+
+.btn-primary { 
+  background: linear-gradient(45deg, #7b00d4, #a020f0); color: white; border: none; 
+  box-shadow: 0 4px 15px rgba(160, 32, 240, 0.4); 
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 20px #c060ff; }
+
+.btn-secondary { background: transparent; color: #e0aaff; border: 1px solid rgba(160, 32, 240, 0.5); }
+.btn-secondary:hover { background: rgba(160, 32, 240, 0.1); color: #fff; }
+
+/* --- 2. HERO GALLERY --- */
+.hero-right { 
+  height: 600px; overflow: hidden; position: relative; border-radius: 20px; 
+  border: 1px solid rgba(160, 32, 240, 0.2); background: rgba(10, 0, 20, 0.6); 
+  backdrop-filter: blur(10px); 
+}
+
+.hero-right::before, .hero-right::after { 
+  content: ''; position: absolute; left: 0; right: 0; height: 100px; z-index: 2; pointer-events: none; 
+}
+.hero-right::before { top: 0; background: linear-gradient(to bottom, #05000a, transparent); }
+.hero-right::after { bottom: 0; background: linear-gradient(to top, #05000a, transparent); }
+
+.gallery-track { display: flex; flex-direction: column; gap: 15px; padding: 15px; animation: scrollUp 20s linear infinite; }
+.hero-right:hover .gallery-track { animation-play-state: paused; }
+
+.gallery-img { 
+  width: 100%; height: 250px; object-fit: cover; border-radius: 12px; 
+  filter: grayscale(80%) hue-rotate(260deg); transition: all 0.3s ease; 
+}
+.gallery-img:hover { filter: grayscale(0%); transform: scale(1.02); }
+
+@keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+
+/* --- 3. KEYNOTE & SPEAKERS GRID --- */
+.home-section { padding: 100px max(5vw, 20px); max-width: 1400px; margin: 0 auto; position: relative; z-index: 10; border-bottom: 1px solid rgba(160, 32, 240, 0.15); }
+
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; color: #fff; }
+.section-subtitle { color: #e0aaff; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+.glass-card { background: rgba(20, 0, 40, 0.5); backdrop-filter: blur(8px); border: 1px solid rgba(160, 32, 240, 0.2); border-radius: 16px; transition: all 0.3s ease; }
+.glass-card:hover { border-color: #c060ff; box-shadow: 0 10px 30px rgba(160, 32, 240, 0.2); }
+
+.grid-container { display: grid; gap: 30px; }
+
+.keynote-grid, .speakers-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-template-rows: repeat(2, auto);
+}
+
+.speaker-card { text-align: center; padding: 30px; border-radius: 20px; height: 100%; }
+.speaker-card:hover { transform: translateY(-10px); }
+
+.speaker-img-wrapper { 
+  width: 150px; height: 150px; margin: 0 auto 20px; border-radius: 50%; padding: 5px; 
+  background: linear-gradient(135deg, #3d0070, #a020f0); 
+}
+.speaker-img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #05000a; }
+
+.speaker-role { color: #c060ff; font-weight: 600; margin-bottom: 10px; }
+.speaker-topic { font-size: 0.9rem; margin-top: 15px; color: #fff; font-style: italic; line-height: 1.5; }
+
+/* Communities Collaborator Fix */
+.collab-grid .sponsor-logo {
+  width: 180px !important;
+  height: 180px !important;
+  background-color: #ffffff !important;
+  border-radius: 50% !important;
+  padding: 30px !important;
+  filter: none !important;
+  opacity: 1 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border: 4px solid rgba(160, 32, 240, 0.3);
+}
+
+/* --- 4. THE LEGACY (GRID & CARDS) --- */
+.legacy-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 30px; 
+}
+
+.event-card { 
+  overflow: hidden; 
+  cursor: none; 
+}
+
+.event-card:hover { transform: translateY(-5px); }
+
+.event-img { 
+  height: 160px; 
+  background: linear-gradient(135deg, #1e0036, #05000a); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-size: 2.2rem; 
+  font-weight: 800; 
+  color: rgba(224, 170, 255, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+.event-card:hover .event-img { 
+  color: #c9a227; 
+  text-shadow: 0 0 15px rgba(201, 162, 39, 0.6); 
+}
+
+.event-info { padding: 20px; }
+.event-info h3 { margin-bottom: 8px; color: #fff; font-size: 1.2rem; }
+.event-info p { font-size: 0.9rem; color: #e0aaff; line-height: 1.4; }
+
+/* --- 5. AGENDA & FAQ --- */
+.agenda-list { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+.agenda-item { display: flex; gap: 30px; padding: 30px; }
+.agenda-time { font-weight: 700; color: #c060ff; font-size: 1.2rem; min-width: 140px; }
+
+.faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+.faq-question { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+.faq-item.active .faq-answer { max-height: 400px; padding: 20px; }
+.faq-answer { max-height: 0; overflow: hidden; transition: all 0.4s ease; }
+
+/* --- 6. SPONSORS (FULL COLOR, ROUNDED, NO HOVER) --- */
+.sponsors-flex { display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; align-items: center; }
+
+.sponsor-logo { 
+  width: 180px !important;
+  height: 100px !important; 
+  object-fit: contain; 
+  background-color: #ffffff !important; 
+  padding: 15px;
+  border-radius: 20px !important; 
+  filter: none !important; 
+  opacity: 1 !important;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: none !important; 
+}
+
+.main-sponsor { 
+  width: 300px !important; 
+  height: auto !important; 
+  padding: 25px;
+  background-color: #ffffff !important; 
+  border: 4px solid #76b900 !important; 
+  border-radius: 30px !important; 
+  opacity: 1 !important;
+  box-shadow: 0 15px 40px rgba(118, 185, 0, 0.2);
+  transition: none !important; 
+}
+
+/* --- 7. DECORATIONS (MARQUEE & SCROLL) --- */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.6;
+  z-index: 20;
+}
+.mouse { width: 22px; height: 35px; border: 2px solid #a020f0; border-radius: 20px; position: relative; }
+.wheel { 
+  width: 4px; height: 4px; background: #fff; border-radius: 50%; 
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%); 
+  animation: scrollMouse 1.5s infinite; 
+}
+@keyframes scrollMouse { 0% { opacity: 1; top: 8px; } 100% { opacity: 0; top: 20px; } }
+
+.hero-marquee {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  background: rgba(160, 32, 240, 0.05);
+  border-top: 1px solid rgba(160, 32, 240, 0.1);
+  overflow: hidden;
+  z-index: 5;
+}
+.marquee-inner { display: flex; white-space: nowrap; animation: marqueeLoop 25s linear infinite; }
+.marquee-inner span { font-size: 0.8rem; font-weight: 900; letter-spacing: 5px; color: rgba(224, 170, 255, 0.25); margin-right: 50px; }
+@keyframes marqueeLoop { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* --- 8. RESPONSIVE --- */
+.reveal-on-scroll { opacity: 1 !important; transform: translateY(0) !important; transition: all 0.8s ease; }
+
+@media (max-width: 1100px) {
+  .keynote-grid, .speakers-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ==============================================================
+   TAMBAHAN REVISI (SESUAI PERINTAH)
+============================================================== */
+
+/* REVISI 1: Menghilangkan garis pembatas antar section */
+.border-none {
+  border-bottom: none !important;
+}
+
+/* REVISI 2: Timeline Agenda Elegan */
+.timeline-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    padding: 20px 30px;
+    transition: transform 0.3s ease;
+}
+
+.timeline-item:hover {
+    background: rgba(160, 32, 240, 0.05);
+    transform: translateX(10px);
+}
+
+.timeline-time {
+    font-family: 'Courier New', Courier, monospace;
+    color: #c060ff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    width: 150px; 
+    flex-shrink: 0;
+}
+
+.timeline-content h3 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0;
+}
+
+/* Timeline Khusus Keynote Speaker */
+.timeline-item.keynote {
+    background: rgba(15, 5, 25, 0.6);
+    border: 1px solid rgba(160, 32, 240, 0.3);
+    padding: 30px;
+    align-items: flex-start;
+}
+
+.timeline-item.keynote .badge {
+    background: #a020f0;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.timeline-item.keynote h3 {
+    font-size: 1.6rem;
+    color: #e0aaff;
+    margin-bottom: 5px;
+}
+
+.timeline-item.keynote .role {
+    font-size: 0.9rem;
+    color: #b388ff;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.timeline-item.keynote p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.break-time h3 { 
+    color: rgba(255, 255, 255, 0.4); 
+    font-style: italic; 
+}
+
+/* REVISI 3: Sponsor Grid Seragam & Presisi (Berwarna, Tanpa Hover) */
+.sponsor-grid-uniform {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.sponsor-card-ui {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 250px; 
+    height: 140px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    /* Dihilangkan efek transisinya agar statis */
+}
+
+.sponsor-card-ui img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+    /* REVISI: Tampilkan warna asli, hilangkan grayscale dan transparansi */
+    filter: none; 
+    opacity: 1; 
+}
+
+/* ==============================================================
+   RESPONSIVE DESIGN (HP & Tablet)
+============================================================== */
+@media (max-width: 1100px) {
+  .keynote-grid, .speakers-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 768px) {
+  /* 1. Mencegah layar HP bisa digeser ke kanan-kiri (Horizontal Scroll) */
+  body, html {
+    overflow-x: hidden;
+  }
+
+  /* 2. Hero Layout - Paksa ke tengah dan beri jarak aman di pinggir */
+  .hero-section { 
+      grid-template-columns: 1fr; 
+      text-align: center; 
+      padding-top: 120px !important; 
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+      gap: 40px; 
+  }
+  
+  .hero-left { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      width: 100%; 
+      max-width: 100vw;
+  }
+
+  .hero-right { 
+      height: 350px; 
+      order: -1; 
+      width: 100%; 
+  }
+
+  /* 3. Typography di HP - Dikecilin biar nggak jebol */
+  .hero-title {
+      font-size: 2.5rem !important; 
+      line-height: 1.2;
+      word-wrap: break-word;
+  }
+
+  .hero-caption {
+      font-size: 1rem !important;
+      padding: 0 10px;
+  }
+
+  /* 4. Countdown - Diubah jadi Grid 2x2 biar rapi */
+  .hero-countdown { 
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px; 
+      width: 100%;
+      max-width: 320px; 
+      justify-content: center;
+  }
+  .countdown-item { 
+      min-width: unset; 
+      width: 100%; 
+      padding: 15px 10px; 
+  }
+  
+  /* 5. Info Container - Ditumpuk ke bawah (Vertikal) */
+  .info-container { 
+      flex-direction: column; 
+      align-items: center; 
+      gap: 25px !important; 
+      width: 100%;
+      border-bottom: none; /* Hilangkan garis di HP biar lega */
+  }
+  .info-block { 
+      flex-direction: column; 
+      text-align: center; 
+  }
+  
+  /* 6. Hero Stats - Diubah jadi Grid 2x2 */
+  .hero-stats { 
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px !important; 
+      width: 100%;
+      max-width: 400px;
+  }
+  .stat-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .stat-box h2 {
+      font-size: 2rem;
+  }
+  
+  /* 7. Elemen Bawah Hero */
+  .cta-group { flex-direction: column; width: 100%; max-width: 300px; }
+  .cta-group .btn { width: 100%; }
+  
+  .keynote-grid, .speakers-grid { grid-template-columns: 1fr !important; }
+  .scroll-indicator { display: none; }
+  
+  /* 8. Timeline & Sponsor HP */
+  .timeline-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .timeline-time { width: auto; font-size: 1rem; }
+  .sponsor-card-ui { width: 100%; height: auto; padding: 30px; } 
+  .main-sponsor { width: 100% !important; padding: 30px !important;}
+}
+
+/* =========================================
+   THE LEGACY SECTION STYLES
+========================================= */
+.legacy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.event-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 15px;
+  background: rgba(15, 5, 25, 0.6);
+  border: 1px solid rgba(160, 32, 240, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.event-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(160, 32, 240, 0.2);
+  border-color: rgba(160, 32, 240, 0.6);
+}
+
+.event-img {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-start; /* Posisi badge di atas kiri */
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efek zoom gambar pas di-hover */
+.event-card:hover .event-img {
+  background-size: 110%; /* Zoom in sedikit */
+}
+
+.event-tag {
+  background: rgba(160, 32, 240, 0.9);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.event-info {
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.event-info h3 {
+  margin: 0 0 10px 0;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.event-info p {
+  color: #a0a0a0;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --- FAQ ACCORDION --- */
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.faq-question h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.faq-icon {
+  width: 20px; 
+  height: 20px; 
+  filter: invert(0.6) sepia(1) saturate(5) hue-rotate(250deg);
+  transition: transform 0.3s ease;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.faq-answer p {
+  padding: 0 20px;
+  margin: 0; 
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+
+/* State saat aktif (dibuka) */
+.faq-item.active {
+  border-color: rgba(160, 32, 240, 0.6);
+  background: rgba(160, 32, 240, 0.05);
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg); /* Putar icon jadi bentuk 'X' */
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px; /* Cukup tinggi untuk nampung teks */
+  padding-bottom: 20px;
+}

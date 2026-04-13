@@ -1,0 +1,384 @@
+/* ==============================================================
+   PAGES / REGISTER / STYLE.CSS - REVISI RESPONSIVE & BADGE
+============================================================== */
+
+/* --- 1. CONTAINER & WRAPPER --- */
+.register-wrapper {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 60px;
+    background: rgba(15, 5, 25, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(160, 32, 240, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box; /* Crucial */
+}
+
+.register-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.register-header .section-title {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #fff 30%, #a020f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.register-header .section-subtitle {
+    color: #b388ff;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* --- 2. SECTION TITLES --- */
+.form-section-title {
+    font-size: 0.85rem;
+    color: #c060ff;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 45px 0 25px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(160, 32, 240, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: #a020f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #a020f0;
+}
+
+/* --- 3. FORM CONTROLS --- */
+.sorcery-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Default 2 kolom */
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%; /* Ensure full width within grid cell */
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e0aaff;
+    margin-left: 5px;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(160, 32, 240, 0.2);
+    padding: 15px 18px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    width: 100%; /* Full width within form-group */
+    box-sizing: border-box;
+}
+
+/* Placeholder Styling */
+::placeholder { color: rgba(224, 170, 255, 0.3); }
+
+/* Focus State - Premium Glow */
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    background: rgba(160, 32, 240, 0.08);
+    border-color: #a020f0;
+    box-shadow: 0 0 20px rgba(160, 32, 240, 0.25), inset 0 0 10px rgba(160, 32, 240, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Select Arrow Styling */
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a020f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 18px;
+}
+
+/* --- 4. CHECKBOX CUSTOM --- */
+.checkbox-group {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 15px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #a020f0;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.checkbox-group label {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(224, 170, 255, 0.8);
+    cursor: pointer;
+}
+
+/* --- 5. VALIDATION & ERROR STATES --- */
+.req {
+    color: #ff3b30;
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+.optional {
+    color: rgba(224, 170, 255, 0.5);
+    font-weight: 400;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    font-style: italic;
+}
+
+.error-msg {
+    color: #ff453a;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-left: 5px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.input-error {
+    border-color: #ff453a !important;
+    background: rgba(255, 69, 58, 0.05) !important;
+    box-shadow: 0 0 10px rgba(255, 69, 58, 0.2) !important;
+}
+
+.input-error + .error-msg { display: block; }
+
+.alert-box {
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+.alert-box.error {
+    background: rgba(255, 69, 58, 0.1);
+    border: 1px solid rgba(255, 69, 58, 0.3);
+    color: #fff;
+}
+
+.alert-icon { font-size: 1.5rem; }
+
+/* --- 6. SUCCESS STATE & NEURAL LOADER --- */
+.success-state {
+    text-align: center;
+    padding: 40px 0;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.spell-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0 50px 0;
+}
+
+.neural-rings {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ring-outer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 3px solid #a020f0;
+    border-bottom: 3px solid #a020f0;
+    border-radius: 50%;
+    animation: spinRight 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    box-shadow: 0 0 20px rgba(160, 32, 240, 0.4);
+}
+
+.ring-inner {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    border: 3px solid transparent;
+    border-left: 3px solid #e0aaff;
+    border-right: 3px solid #e0aaff;
+    border-radius: 50%;
+    animation: spinLeft 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.loading-text {
+    margin-top: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #e0aaff;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: pulseText 1.2s ease-in-out infinite;
+}
+
+/* --- QR/BADGE PREVIEW STATES --- */
+.qr-placeholder {
+    background: #fff;
+    padding: 25px;
+    width: fit-content;
+    margin: 0 auto 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(160, 32, 240, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* REVISI: Mengunci Badge Preview agar tidak keluar Wrapper */
+.badge-preview-container {
+    margin: 0 auto 40px;
+    width: 100%; /* Paksa mengikuti lebar wrapper */
+    max-width: 700px; /* Batas maksimal visual di layar */
+    display: flex;
+    justify-content: center;
+    overflow: hidden; /* Cegah elemen meluap */
+}
+
+.badge-preview-container canvas {
+    width: 100% !important; /* SCALE DOWN: Paksa canvas mengecil secara visual */
+    height: auto !important; /* Pertahankan rasio asli (1000x620) */
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(160, 32, 240, 0.3);
+    border: 2px solid rgba(160, 32, 240, 0.5);
+}
+
+.success-state h3 {
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.success-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* --- 7. UTILS & ANIMATIONS --- */
+.btn-large {
+    width: 100%;
+    margin-top: 20px;
+    padding: 20px !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 800;
+    border-radius: 14px !important;
+}
+
+/* Atur tombol download badge agar tampil penuh */
+#btn-download-badge {
+    text-align: center;
+    text-decoration: none;
+}
+
+.hidden { display: none !important; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes spinRight {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes spinLeft { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+
+@keyframes pulseText { 0%, 100% { opacity: 0.4; text-shadow: none; } 50% { opacity: 1; text-shadow: 0 0 15px #c060ff; } }
+
+/* Emerge animation for Badge/QR */
+.qr-emerge {
+    animation: qrPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes qrPop {
+    0% { transform: scale(0.5) translateY(50px); opacity: 0; filter: blur(10px); }
+    70% { transform: scale(1.1) translateY(-10px); opacity: 1; filter: blur(0px); }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* --- 8. RESPONSIVE --- */
+@media (max-width: 768px) {
+    .register-wrapper {
+        padding: 40px 25px;
+        margin: 20px;
+        border-radius: 16px;
+    }
+    
+    .register-header .section-title { font-size: 2rem; }
+    
+    /* REVISI RESPONSIVE UTAMA: Paksa form-row jadi 1 kolom di Mobile */
+    .form-row {
+        grid-template-columns: 1fr; /* Stack vertically */
+        gap: 20px;
+    }
+
+    .success-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .alert-box {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .badge-preview-container canvas {
+        border-radius: 12px;
+    }
+}

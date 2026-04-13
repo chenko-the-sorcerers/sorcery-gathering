@@ -1,0 +1,680 @@
+/* ==============================================================
+   PAGES / DASHBOARD / STYLE.CSS
+   STATUS: FULL VERSION (V4.0 - FULLY RESPONSIVE & MODALS)
+   THEME: APPLE-LEVEL PREMIUM DARK / SORCERY COMMAND CENTER
+============================================================== */
+
+/* --- GLOBAL LAYOUT --- */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background: transparent !important; 
+    color: #fff;
+    padding-top: 80px; 
+    padding-bottom: 60px; 
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.material-icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- SIDEBAR NAVIGATION --- */
+.dash-sidebar {
+    width: 280px;
+    background: transparent;
+    border-right: 1px solid rgba(160, 32, 240, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    position: fixed;
+    height: calc(100vh - 80px);
+    z-index: 100;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: none;
+}
+
+.sidebar-brand {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgba(160, 32, 240, 0.3);
+}
+
+.sidebar-brand h3 { 
+    margin: 0; 
+    color: #fff; 
+    font-size: 1.2rem; 
+    letter-spacing: 2px;
+    font-weight: 800;
+}
+
+.sidebar-user {
+    display: flex; 
+    align-items: center; 
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.03); 
+    padding: 15px; 
+    border-radius: 12px;
+    margin-bottom: 30px; 
+    border: 1px solid rgba(160, 32, 240, 0.2);
+    transition: 0.3s;
+}
+
+.sidebar-user:hover {
+    background: rgba(160, 32, 240, 0.08);
+    border-color: rgba(160, 32, 240, 0.5);
+}
+
+.user-role { 
+    font-size: 0.75rem; 
+    color: #a0a0a0; 
+    margin: 0; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#active-admin-name { 
+    margin: 0; 
+    color: #e0aaff; 
+    font-size: 1.1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-nav { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    flex-grow: 1; 
+}
+
+.sidebar-nav li { 
+    margin-bottom: 10px; 
+    cursor: pointer;
+}
+
+.sidebar-nav a {
+    display: flex; 
+    align-items: center; 
+    color: #a0a0a0; 
+    text-decoration: none; 
+    padding: 12px 18px;
+    border-radius: 10px; 
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.sidebar-nav li.active a, 
+.sidebar-nav li:hover a {
+    background: rgba(160, 32, 240, 0.15); 
+    color: #fff;
+    border-left: 4px solid #a020f0;
+}
+
+.sidebar-nav li.active a .material-icons, 
+.sidebar-nav li:hover a .material-icons {
+    color: #c060ff;
+}
+
+.sidebar-footer { 
+    text-align: center; 
+    color: #555; 
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-footer p { margin: 5px 0; }
+.small-text { font-size: 0.75rem; font-family: monospace; }
+
+/* --- MAIN CONTENT --- */
+.dash-main {
+    flex-grow: 1;
+    margin-left: 280px; 
+    padding: 40px 5%;
+    transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 100%;
+}
+
+.dash-header { margin-bottom: 40px; }
+
+.dash-header h1 { 
+    font-size: clamp(2rem, 5vw, 2.5rem); 
+    font-weight: 900; 
+    margin-bottom: 10px; 
+    letter-spacing: -1px;
+}
+
+.dash-header p {
+    color: #888;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.highlight {
+    color: #a020f0;
+    text-shadow: 0 0 20px rgba(160, 32, 240, 0.4);
+}
+
+/* --- TAB NAVIGATION LOGIC --- */
+.dash-tab {
+    display: none;
+    animation: fadeInTab 0.4s ease-out forwards;
+}
+
+.dash-tab.active-tab { display: block; }
+.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important; /* Membunuh blokade kursor 100% */
+    z-index: -9999 !important;
+    display: none !important;
+}
+
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- CARDS & PANELS (GLASSMORPHISM) --- */
+.dash-stats { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 25px; 
+    margin-bottom: 40px; 
+}
+
+.stat-card { 
+    background: rgba(15, 5, 25, 0.5); 
+    border: 1px solid rgba(160, 32, 240, 0.3); 
+    border-radius: 20px; 
+    padding: 30px; 
+    text-align: center; 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transition: 0.4s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(160, 32, 240, 0.6);
+    background: rgba(15, 5, 25, 0.7);
+}
+
+.stat-card.glow { 
+    box-shadow: 0 10px 30px rgba(160, 32, 240, 0.1); 
+    border-color: rgba(160, 32, 240, 0.6); 
+}
+
+.stat-card h3 { 
+    font-size: clamp(2.5rem, 5vw, 3.5rem); 
+    color: #fff; 
+    margin: 0 0 5px; 
+    font-weight: 800;
+}
+
+.stat-card p {
+    color: #a0a0a0;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.dash-grid { 
+    display: grid; 
+    grid-template-columns: 1.5fr 1fr; 
+    gap: 30px; 
+}
+
+.dash-panel { 
+    background: rgba(15, 5, 25, 0.6); 
+    border: 1px solid rgba(160, 32, 240, 0.2); 
+    border-radius: 20px; 
+    padding: 25px; 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dash-panel h2 { 
+    color: #fff; 
+    font-size: 1.25rem; 
+    margin-top: 0; 
+    margin-bottom: 25px; 
+    font-weight: 700;
+}
+
+/* --- UI COMPONENTS (Buttons, Inputs, Textarea) --- */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #a020f0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: inherit;
+    padding: 12px 20px;
+    font-size: 1rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #c060ff;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.5);
+}
+
+.btn-primary:disabled {
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.btn-action:hover {
+    background: #a020f0;
+    border-color: #c060ff;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #c060ff !important;
+    box-shadow: 0 0 10px rgba(160, 32, 240, 0.3);
+}
+
+.w-full { width: 100%; }
+.mt-20 { margin-top: 20px; }
+
+/* --- HTML5 QR CODE OVERRIDES --- */
+#qr-reader {
+    border: none !important;
+    background: transparent;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#qr-reader button {
+    background: rgba(160, 32, 240, 0.2);
+    color: #fff;
+    border: 1px solid rgba(160, 32, 240, 0.6);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.3s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+#qr-reader button:hover {
+    background: #a020f0;
+    box-shadow: 0 0 10px rgba(160, 32, 240, 0.4);
+}
+
+#qr-reader a {
+    color: #e0aaff !important;
+    text-decoration: none !important;
+    margin-top: 15px;
+    display: inline-block;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+#qr-reader a:hover {
+    color: #fff !important;
+    text-decoration: underline !important;
+}
+
+#qr-reader select {
+    background: rgba(15, 5, 25, 0.8);
+    color: #fff;
+    border: 1px solid #a020f0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    width: 100%;
+    max-width: 300px;
+    font-family: inherit;
+}
+
+#qr-reader span {
+    color: #a0a0a0;
+}
+
+/* --- SCANNER ALERTS --- */
+.scan-alert { 
+    margin-top: 15px; 
+    padding: 18px; 
+    border-radius: 12px; 
+    text-align: center; 
+    font-weight: 600;
+    font-size: 0.95rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.scan-alert.success { background: rgba(0, 255, 100, 0.1); color: #00ff64; border: 1px solid rgba(0, 255, 100, 0.3); }
+.scan-alert.error { background: rgba(255, 51, 102, 0.1); color: #ff3366; border: 1px solid rgba(255, 51, 102, 0.3); }
+.scan-alert.pending { background: rgba(255, 204, 0, 0.1); color: #ffcc00; border: 1px solid rgba(255, 204, 0, 0.3); }
+
+/* --- DATABASE TABLE (FIX ROW SPACING) --- */
+.table-container { 
+    overflow-x: auto; 
+    border-radius: 12px;
+    width: 100%;
+}
+
+#registry-table, #broadcast-table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0;
+    min-width: 600px; /* Mencegah tabel menyusut terlalu kecil di HP */
+}
+
+#registry-table th, #broadcast-table th { 
+    color: #e0aaff; 
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: sticky; 
+    top: 0; 
+    z-index: 10;
+    border-bottom: 2px solid rgba(160, 32, 240, 0.3);
+    padding: 20px 15px;
+}
+
+#registry-table td, #broadcast-table td { 
+    font-size: 0.95rem;
+    padding: 18px 15px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+    transition: 0.2s;
+    vertical-align: middle;
+}
+
+#registry-table tr:hover td, #broadcast-table tr:hover td {
+    background: rgba(160, 32, 240, 0.15);
+}
+
+/* Badges */
+.badge-status { 
+    padding: 6px 12px; 
+    border-radius: 100px; 
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+.badge-pending { background: rgba(255, 204, 0, 0.15); color: #ffcc00; border: 1px solid rgba(255, 204, 0, 0.3); }
+.badge-hadir { background: rgba(0, 255, 100, 0.15); color: #00ff64; border: 1px solid rgba(0, 255, 100, 0.3); }
+
+/* ==============================================================
+   LOGIN OVERLAY (ABSOLUTE PRIORITY)
+============================================================== */
+.dash-login-overlay { 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: #05020a; 
+    backdrop-filter: blur(25px); 
+    -webkit-backdrop-filter: blur(25px);
+    z-index: 999999; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.login-box { 
+    background: #0f0519; 
+    padding: 50px; 
+    border-radius: 24px; 
+    border: 1px solid rgba(160, 32, 240, 0.4); 
+    text-align: center; 
+    max-width: 450px; 
+    width: 90%; 
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(160, 32, 240, 0.2); 
+}
+
+.login-box h2 { 
+    color: #fff; 
+    margin-top: 0; 
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.login-box p { 
+    color: #888; 
+    margin-bottom: 30px; 
+}
+
+.login-box input {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(160, 32, 240, 0.4);
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 6px; 
+    border-radius: 12px;
+    outline: none;
+    caret-color: #e0aaff; 
+    margin-bottom: 20px;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.text-error { 
+    color: #ff3366 !important; 
+    font-weight: 600; 
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+#btn-login {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.loading-blink {
+    animation: pulse-glow 1s infinite alternate;
+    opacity: 0.8;
+    cursor: wait !important;
+}
+
+@keyframes pulse-glow {
+    from { box-shadow: 0 0 5px #a020f0; }
+    to { box-shadow: 0 0 25px #c060ff; background: #c060ff; }
+}
+
+/* ==============================================================
+   MODAL OVERLAY (OTS, DETAIL, LOGOUT)
+============================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-overlay.hidden, .dash-login-overlay.hidden {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.modal-box {
+    background: #0f0519;
+    padding: 30px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(160, 32, 240, 0.5);
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(160, 32, 240, 0.2);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    box-sizing: border-box;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ==============================================================
+   RESPONSIVE LOGIC (THE MAGIC MEDIA QUERIES)
+============================================================== */
+
+/* TABLET & SMALL DESKTOP (Lipat Sidebar) */
+@media (max-width: 992px) {
+    .dash-sidebar { 
+        width: 85px; 
+        padding: 25px 10px; 
+    }
+    
+    .sidebar-brand h3, 
+    .sidebar-user div, 
+    .sidebar-footer { 
+        display: none !important; 
+    }
+
+    .sidebar-brand {
+        border-bottom: none;
+        margin-bottom: 20px;
+    }
+
+    .sidebar-user {
+        padding: 10px;
+        justify-content: center;
+        border: none;
+        background: transparent;
+    }
+
+    /* Menyembunyikan text pada menu nav, menyisakan icon */
+    .sidebar-nav a {
+        font-size: 0;
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .sidebar-nav a .material-icons {
+        font-size: 1.8rem;
+    }
+
+    .dash-main { 
+        margin-left: 85px; 
+        padding: 30px 20px; 
+    }
+    
+    /* Ubah Grid yang tadinya 2 kolom jadi 1 kolom */
+    .dash-grid { 
+        grid-template-columns: 1fr !important; 
+    }
+}
+
+/* MOBILE PHONES */
+@media (max-width: 576px) {
+    .dashboard-layout {
+        padding-top: 60px;
+    }
+    
+    .dash-sidebar {
+        width: 65px;
+        padding: 15px 5px;
+    }
+
+    .dash-main {
+        margin-left: 65px;
+        padding: 20px 15px;
+    }
+
+    .dash-header h1 {
+        font-size: 2rem;
+    }
+
+    .dash-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-card h3 {
+        font-size: 3rem;
+    }
+
+    .dash-panel {
+        padding: 15px;
+    }
+
+    /* Form Action di Tab Database merapat ke bawah */
+    #tab-database .dash-panel:first-child {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #search-participant, #filter-status, #btn-open-ots, #btn-refresh-data {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .modal-box {
+        padding: 25px 20px;
+    }
+}
